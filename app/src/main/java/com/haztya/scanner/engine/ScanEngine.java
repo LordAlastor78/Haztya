@@ -14,12 +14,11 @@ import com.haztya.scanner.core.SignatureDatabase;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -36,12 +35,12 @@ public class ScanEngine {
     
     private final SignatureDatabase signatureDatabase;
     private final ExecutorService executorService;
-    private final BlockingQueue<ScanTask> scanQueue;
     private final List<ScanListener> listeners;
     
     private final AtomicInteger filesScanned;
     private final AtomicInteger threatsDetected;
     private final AtomicLong bytesScanned;
+    private final AtomicBoolean cancelRequested = new AtomicBoolean(false);
     
     private boolean isScanning = false;
     private long scanStartTime;
@@ -56,7 +55,6 @@ public class ScanEngine {
     public ScanEngine(SignatureDatabase signatureDatabase) {
         this.signatureDatabase = signatureDatabase;
         this.executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
-        this.scanQueue = new LinkedBlockingQueue<>();
         this.listeners = new ArrayList<>();
         this.filesScanned = new AtomicInteger(0);
         this.threatsDetected = new AtomicInteger(0);
@@ -71,33 +69,71 @@ public class ScanEngine {
             notifyError("Scan already in progress");
             return;
         }
+        cancelRequested.set(false);
         
         isScanning = true;
         scanStartTime = System.currentTimeMillis();
         filesScanned.set(0);
         threatsDetected.set(0);
         bytesScanned.set(0);
-        
-        notifyScanStarted(files.size());
-        
-        // Submit scan tasks
+
+        // Filter only readable files to scan
+        List<File> filtered = new ArrayList<>();
         for (File file : files) {
-            if (file.exists() && file.isFile()) {
-                executorService.submit(() -> scanFile(file));
+            if (file != null && file.exists() && file.isFile() && file.canRead()) {
+                filtered.add(file);
             }
         }
+
+        notifyScanStarted(filtered.size());
+
+        if (filtered.isEmpty()) {
+            isScanning = false;
+            notifyScanCompleted();
+            return;
+        }
+
+        // Coordinate completion similar to Hypatia: wait for all tasks then report
+        CountDownLatch latch = new CountDownLatch(filtered.size());
+
+        for (File file : filtered) {
+            executorService.submit(() -> {
+                try {
+                    scanFile(file);
+                } finally {
+                    latch.countDown();
+                }
+            });
+        }
+
+        // Await completion without blocking UI thread
+        executorService.submit(() -> {
+            try {
+                latch.await();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            } finally {
+                isScanning = false;
+                notifyScanCompleted();
+            }
+        });
     }
     
     /**
      * Scan a single file with multiple detection methods
      */
     public ScanResult scanFile(File file) {
+        if (cancelRequested.get()) {
+            return new ScanResult(file, ScanResult.Status.SKIPPED, "Scan cancelled");
+        }
         if (file == null || !file.exists() || !file.canRead()) {
             return new ScanResult(file, ScanResult.Status.ERROR, "File not accessible");
         }
         
         // Skip very large files
         if (file.length() > MAX_FILE_SIZE) {
+            filesScanned.incrementAndGet();
+            notifyProgress(filesScanned.get());
             return new ScanResult(file, ScanResult.Status.SKIPPED, "File too large");
         }
         
@@ -218,12 +254,11 @@ public class ScanEngine {
      * Calculate Shannon entropy of file
      */
     private double calculateEntropy(File file) {
-        try {
+        try (java.io.FileInputStream fis = new java.io.FileInputStream(file)) {
             int[] frequency = new int[256];
             int totalBytes = 0;
             
             byte[] buffer = new byte[8192];
-            java.io.FileInputStream fis = new java.io.FileInputStream(file);
             int bytesRead;
             
             while ((bytesRead = fis.read(buffer)) != -1 && totalBytes < 1024 * 1024) { // Sample first 1MB
@@ -232,7 +267,6 @@ public class ScanEngine {
                     totalBytes++;
                 }
             }
-            fis.close();
             
             double entropy = 0.0;
             for (int count : frequency) {
@@ -264,13 +298,8 @@ public class ScanEngine {
      * Stop scanning
      */
     public void stopScan() {
+        cancelRequested.set(true);
         isScanning = false;
-        executorService.shutdownNow();
-        try {
-            executorService.awaitTermination(5, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
         notifyScanCompleted();
     }
     
@@ -318,19 +347,6 @@ public class ScanEngine {
     public int getFilesScanned() { return filesScanned.get(); }
     public int getThreatsDetected() { return threatsDetected.get(); }
     public long getBytesScanned() { return bytesScanned.get(); }
-    
-    /**
-     * Scan task for queue
-     */
-    private static class ScanTask {
-        final File file;
-        final int priority;
-        
-        ScanTask(File file, int priority) {
-            this.file = file;
-            this.priority = priority;
-        }
-    }
     
     /**
      * Scan listener interface
