@@ -5,225 +5,225 @@
 ![Android](https://img.shields.io/badge/Android-7.0%2B-green.svg)
 ![License](https://img.shields.io/badge/license-AGPL--3.0-red.svg)
 
-## 🛡️ Descripción
+## 🛡️ Overview
 
-**Haztya** es un escáner de malware avanzado de código abierto para Android, diseñado desde cero para ser más rápido, eficiente y potente que su predecesor Hypatia. Incorpora múltiples algoritmos de detección, análisis heurístico y protección en tiempo real.
+**Haztya** is an open-source advanced malware scanner for Android, built from scratch to be faster, leaner, and more powerful than Hypatia. It ships multi-layer detection, heuristic analysis, and real-time protection.
 
-### Características Principales
+### Key Features
 
-#### 🚀 Rendimiento Optimizado
-- **Multi-threading avanzado**: Utiliza todos los núcleos del procesador de manera eficiente
-- **Cálculo de hashes en un solo paso**: MD5, SHA-1, SHA-256 y SHA-512 simultáneamente
-- **Caché inteligente**: Evita escaneos redundantes de archivos ya verificados
-- **Bajo consumo de batería**: Diseñado para minimizar el impacto en la autonomía
+#### 🚀 Performance Tuned
+- **Advanced multithreading**: Efficiently uses all CPU cores
+- **Single-pass hashing**: MD5, SHA-1, SHA-256, and SHA-512 in one read
+- **Smart cache**: Skips files already verified
+- **Battery friendly**: Designed to minimize drain
 
-#### 🔍 Detección Multicapa
-1. **Detección basada en firmas**: Usa BloomFilters para búsquedas O(k) ultra-rápidas
-2. **Análisis heurístico**: Detecta amenazas desconocidas mediante:
-   - Cálculo de entropía (detecta archivos empaquetados/cifrados)
-   - Análisis de extensiones sospechosas
-   - Detección de doble extensión
-   - Análisis de anomalías de tamaño
-3. **Análisis de APKs**: Inspección específica de aplicaciones Android
-4. **Fuzzy hashing**: Detección de variantes de malware
+#### 🔍 Multi-Layer Detection
+1. **Signature-based detection**: BloomFilters for ultra-fast O(k) lookups
+2. **Heuristic analysis** for unknown threats via:
+   - Entropy scoring (packed/encrypted file detection)
+   - Suspicious extension checks
+   - Double-extension detection
+   - Size anomaly detection
+3. **APK analysis**: Android app inspection
+4. **Fuzzy hashing**: Variant detection
 
-#### 🛡️ Protección en Tiempo Real
-- Monitoreo recursivo del sistema de archivos
-- Escaneo automático de archivos nuevos/modificados
-- Período de enfriamiento configurable para evitar escaneos repetitivos
-- Notificaciones instantáneas de amenazas
+#### 🛡️ Real-Time Protection
+- Recursive filesystem monitoring
+- Auto-scan on new/modified files
+- Configurable cooldown to avoid repeated scans
+- Instant threat notifications
 
-#### 📊 Base de Datos Avanzada
-- **Múltiples estructuras de datos**:
-  - BloomFilters para búsquedas rápidas (0.1% tasa de falsos positivos)
-  - HashMaps para coincidencias precisas
-  - Soporte para patrones YARA
-- **Información detallada de amenazas**:
-  - Nombre del malware
-  - Familia de malware
-  - Nivel de amenaza (LOW, MEDIUM, HIGH, CRITICAL)
-  - Fuente de la firma (ClamAV, ESET, etc.)
-  - Descripción
-- **Actualización eficiente**: Usa ETags HTTP para descargar solo cambios
+#### 📊 Advanced Threat Database
+- **Multiple data structures**:
+  - BloomFilters for fast lookups (0.1% false-positive target)
+  - HashMaps for exact matches
+  - YARA pattern support
+- **Rich threat metadata**:
+  - Malware name
+  - Family
+  - Severity (LOW, MEDIUM, HIGH, CRITICAL)
+  - Signature source (ClamAV, ESET, etc.)
+  - Description
+- **Efficient updates**: HTTP ETags to download only deltas
 
-## 📋 Requisitos del Sistema
+## 📋 System Requirements
 
-- **Android**: 7.0 (Nougat) o superior
-- **RAM**: Mínimo 2GB (recomendado 4GB para escaneos completos)
-- **Almacenamiento**: 500MB para la aplicación y bases de datos
+- **Android**: 7.0 (Nougat) or newer
+- **RAM**: 2GB minimum (4GB recommended for full scans)
+- **Storage**: 500MB for app and databases
 
-## 🏗️ Arquitectura del Proyecto
+## 🏗️ Project Architecture
 
 ```
 com.haztya.scanner/
-├── core/                       # Componentes fundamentales
-│   ├── HashCalculator.java     # Cálculo de hashes optimizado
-│   ├── SignatureDatabase.java  # Gestión de base de datos
-│   └── MalwareSignature.java   # Modelo de datos de firmas
+├── core/                       # Core components
+│   ├── HashCalculator.java     # Optimized hash calculation
+│   ├── SignatureDatabase.java  # Database management
+│   └── MalwareSignature.java   # Signature data model
 │
-├── engine/                     # Motor de escaneo
-│   ├── ScanEngine.java         # Motor principal multi-threaded
-│   └── ScanResult.java         # Resultados de escaneo
+├── engine/                     # Scan engine
+│   ├── ScanEngine.java         # Multithreaded scan engine
+│   └── ScanResult.java         # Scan results
 │
-├── realtime/                   # Protección en tiempo real
-│   └── RealtimeMonitor.java    # Monitor recursivo de archivos
+├── realtime/                   # Real-time protection
+│   └── RealtimeMonitor.java    # Recursive file monitor
 │
-├── network/                    # Funciones de red
-│   └── DatabaseDownloader.java # Descarga de bases de datos
+├── network/                    # Networking helpers
+│   └── DatabaseDownloader.java # Database downloads
 │
-└── ui/                         # Interfaz de usuario
-    └── MainActivity.java       # Actividad principal
+└── ui/                         # User interface
+    └── MainActivity.java       # Main activity
 ```
 
-## 🔧 Tecnologías y Librerías
+## 🔧 Technologies & Libraries
 
-### Dependencias Principales
-- **AndroidX**: Componentes modernos de Android (AppCompat, RecyclerView, Room)
-- **Guava 33.0.0**: BloomFilters y estructuras de datos avanzadas
-- **BouncyCastle 1.77**: Criptografía y verificación de firmas
-- **Apache Commons**: Utilidades de IO, compresión y colecciones
-- **OkHttp 4.12**: Cliente HTTP eficiente
-- **Room Database**: Persistencia local para historial de escaneos
+### Core Dependencies
+- **AndroidX**: Modern Android components (AppCompat, RecyclerView, Room)
+- **Guava 33.0.0**: BloomFilters and advanced data structures
+- **BouncyCastle 1.77**: Crypto and signature validation
+- **Apache Commons**: IO, compression, and collections utilities
+- **OkHttp 4.12**: Efficient HTTP client
+- **Room Database**: Local persistence for scan history
 
-### Algoritmos Implementados
-- **Hashing**: MD5, SHA-1, SHA-256, SHA-512 (cálculo en un solo paso)
-- **Fuzzy Hashing**: Similar a ssdeep para detectar variantes
-- **Entropía de Shannon**: Detección de archivos empaquetados/cifrados
-- **BloomFilter**: Búsquedas probabilísticas O(k)
+### Implemented Algorithms
+- **Hashing**: MD5, SHA-1, SHA-256, SHA-512 (single pass)
+- **Fuzzy hashing**: ssdeep-style variant detection
+- **Shannon entropy**: Packed/encrypted file detection
+- **BloomFilter**: Probabilistic O(k) lookups
 
-## 📊 Comparación con Hypatia Original
+## 📊 Hypatia Comparison
 
-| Característica | Hypatia | Haztya |
-|---------------|---------|---------|
-| Algoritmos de hash | MD5, SHA-1, SHA-256 | MD5, SHA-1, SHA-256, SHA-512, Fuzzy |
-| Análisis heurístico | No | ✅ Sí (múltiples indicadores) |
-| Cálculo de hashes | 3 pasadas | **1 pasada** (optimizado) |
-| Threading | Básico | Avanzado (thread pool adaptativo) |
-| Estructura de datos | Solo BloomFilter | BloomFilter + HashMap + YARA |
-| Información de amenazas | Limitada | Detallada (familia, nivel, fuente) |
-| Análisis de entropía | No | ✅ Sí |
-| Detección de variantes | No | ✅ Sí (fuzzy hashing) |
-| Java Version | 8 | **17** |
+| Feature | Hypatia | Haztya |
+|---------|---------|---------|
+| Hash algorithms | MD5, SHA-1, SHA-256 | MD5, SHA-1, SHA-256, SHA-512, Fuzzy |
+| Heuristic analysis | No | ✅ Yes (multiple indicators) |
+| Hash computation | 3 passes | **1 pass** (optimized) |
+| Threading | Basic | Advanced (adaptive pool) |
+| Data structures | BloomFilter only | BloomFilter + HashMap + YARA |
+| Threat metadata | Limited | Detailed (family, level, source) |
+| Entropy analysis | No | ✅ Yes |
+| Variant detection | No | ✅ Yes (fuzzy hashing) |
+| Java version | 8 | **17** |
 | Min Android API | 16 (Android 4.1) | 24 (Android 7.0) |
 | Target SDK | 32 | **34** |
-| Arquitectura | Monolítica | **Modular** |
-| Room Database | No | ✅ Sí |
-| Material Design 3 | No | ✅ Sí |
-| Gradle Version | 7.2 | **8.2** |
+| Architecture | Monolithic | **Modular** |
+| Room Database | No | ✅ Yes |
+| Material Design 3 | No | ✅ Yes |
+| Gradle version | 7.2 | **8.2** |
 
-## 🚀 Compilación e Instalación
+## 🚀 Build & Install
 
-### Prerrequisitos
+### Prerequisites
 ```bash
-- JDK 17 o superior
+- JDK 17 or newer
 - Android SDK (API 34)
 - Gradle 8.2+
 ```
 
-### Pasos
+### Steps
 ```bash
-# 1. Clonar el repositorio
+# 1. Clone the repository
 git clone https://github.com/tuusuario/Haztya.git
 cd Haztya
 
-# 2. Compilar el proyecto
+# 2. Build the project
 ./gradlew assembleRelease
 
-# 3. Instalar en dispositivo
+# 3. Install on a device
 adb install app/build/outputs/apk/release/app-release.apk
 ```
 
-## 📱 Uso
+## 📱 Usage
 
-### Escaneo Rápido
-Escanea directorios comunes (Descargas, documentos recientes)
+### Quick Scan
+Scans common directories (Downloads, recent documents).
 
-### Escaneo Completo
-Escanea todo el almacenamiento del dispositivo
+### Full Scan
+Scans the entire device storage.
 
-### Protección en Tiempo Real
-Activa el monitoreo continuo del sistema de archivos
+### Real-Time Protection
+Enables continuous filesystem monitoring.
 
-### Actualizar Base de Datos
-Descarga las últimas firmas de malware desde servidores remotos
+### Update Database
+Downloads the latest malware signatures from remote servers.
 
-## 🎯 Optimizaciones Técnicas
+## 🎯 Technical Optimizations
 
-### 1. Cálculo de Hashes Multi-algoritmo en Un Solo Paso
+### 1. Single-Pass Multi-Algorithm Hashing
 ```java
-// Hypatia: 3 lecturas del archivo
-String md5 = calculateMD5(file);      // Lectura 1
-String sha1 = calculateSHA1(file);    // Lectura 2
-String sha256 = calculateSHA256(file); // Lectura 3
+// Hypatia: 3 file reads
+String md5 = calculateMD5(file);      // Read 1
+String sha1 = calculateSHA1(file);    // Read 2
+String sha256 = calculateSHA256(file); // Read 3
 
-// Haztya: 1 sola lectura para todos los hashes
+// Haztya: 1 read for all hashes
 ConcurrentHashMap<HashType, String> hashes = HashCalculator.calculateAllHashes(file);
 ```
 
-### 2. BloomFilter con Baja Tasa de Falsos Positivos
+### 2. BloomFilter with Low False Positives
 ```java
 BloomFilter<String> filter = BloomFilter.create(
     Funnels.stringFunnel(UTF_8),
-    10_000_000,  // 10 millones de firmas
-    0.001        // 0.1% falsos positivos
+    10_000_000,  // 10 million signatures
+    0.001        // 0.1% false positives
 );
 ```
 
-### 3. Thread Pool Adaptativo
+### 3. Adaptive Thread Pool
 ```java
-// Se adapta automáticamente al número de núcleos
+// Adapts to available CPU cores
 int threadCount = Runtime.getRuntime().availableProcessors();
 ExecutorService executor = Executors.newFixedThreadPool(threadCount);
 ```
 
-### 4. Caché de Escaneos Recientes
+### 4. Recent Scan Cache
 ```java
-// Evita escanear el mismo archivo múltiples veces
+// Skips rescanning the same file repeatedly
 ConcurrentHashMap<String, Long> recentScans = new ConcurrentHashMap<>();
 if (currentTime - lastScan < COOLDOWN_MS) return; // Skip
 ```
 
-## 📈 Métricas de Rendimiento Esperadas
+## 📈 Expected Performance
 
-| Métrica | Hypatia | Haztya |
-|---------|---------|---------|
-| Escaneo archivo 1MB | ~20ms | **< 15ms** |
-| Escaneo archivo 40MB | ~1000ms | **< 800ms** |
-| Memoria (DB cargada) | ~120MB | **< 150MB** |
-| Consumo batería (realtime 24h) | ~3% | **< 2%** |
-| Throughput | ~30 archivos/seg | **~50 archivos/seg** |
+| Metric | Hypatia | Haztya |
+|--------|---------|---------|
+| 1MB file scan | ~20ms | **< 15ms** |
+| 40MB file scan | ~1000ms | **< 800ms** |
+| Memory (DB loaded) | ~120MB | **< 150MB** |
+| Battery (realtime 24h) | ~3% | **< 2%** |
+| Throughput | ~30 files/sec | **~50 files/sec** |
 
 ## 🛣️ Roadmap
 
-### v1.1 (Próximamente)
-- [ ] Soporte completo para reglas YARA
-- [ ] Análisis avanzado de permisos de APK
-- [ ] Machine Learning para detección heurística
-- [ ] Exportar reportes en PDF/JSON
+### v1.1 (Upcoming)
+- [ ] Full YARA rule support
+- [ ] Advanced APK permission analysis
+- [ ] Machine learning for heuristics
+- [ ] Export reports to PDF/JSON
 
-### v1.2 (Futuro)
-- [ ] Cuarentena de archivos infectados
-- [ ] Escaneo programado automático
-- [ ] Widget de estado en pantalla principal
-- [ ] Modo root para escaneo completo del sistema
+### v1.2 (Future)
+- [ ] Infected file quarantine
+- [ ] Scheduled automatic scans
+- [ ] Status widget on home screen
+- [ ] Root mode for full system scans
 
-### v2.0 (Futuro lejano)
-- [ ] Análisis de comportamiento en runtime
-- [ ] Detección específica de ransomware
-- [ ] Análisis de tráfico de red
-- [ ] Portal web para gestión remota
+### v2.0 (Long-term)
+- [ ] Runtime behavior analysis
+- [ ] Ransomware-specific detection
+- [ ] Network traffic analysis
+- [ ] Web portal for remote management
 
-## 🔒 Privacidad y Seguridad
+## 🔒 Privacy & Security
 
-- ✅ **100% Offline**: Los archivos nunca salen del dispositivo
-- ✅ **Sin rastreo**: No recopilamos datos de usuario
-- ✅ **Código abierto**: Completamente auditable
-- ✅ **Sin publicidad**: Software libre sin anuncios
-- ✅ **Licencia AGPL-3.0**: Libertad garantizada
+- ✅ **100% offline**: Files never leave the device
+- ✅ **No tracking**: We do not collect user data
+- ✅ **Open source**: Fully auditable
+- ✅ **Ad-free**: Free software with no ads
+- ✅ **AGPL-3.0 license**: Freedom preserved
 
-## 📄 Licencia
+## 📄 License
 
-Este proyecto está licenciado bajo GNU Affero General Public License v3.0 - ver el archivo [LICENSE](LICENSE) para detalles.
+This project is licensed under the GNU Affero General Public License v3.0 - see [LICENSE](LICENSE) for details.
 
 ```
 Haztya: Advanced Malware Scanner for Android
@@ -235,27 +235,27 @@ the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 ```
 
-## 🙏 Agradecimientos
+## 🙏 Acknowledgements
 
-- **Hypatia** por la inspiración y base conceptual
-- **ClamAV** por las bases de datos de firmas (GPLv2)
-- **ESET** por bases de datos adicionales (BSD 2-Clause)
-- **MalwareBazaar** por firmas de malware (CC0)
-- **Comunidad de código abierto** por las excelentes librerías utilizadas
+- **Hypatia** for inspiration and the conceptual base
+- **ClamAV** for signature databases (GPLv2)
+- **ESET** for additional databases (BSD 2-Clause)
+- **MalwareBazaar** for malware signatures (CC0)
+- **Open-source community** for the libraries used
 
-## 🤝 Contribuir
+## 🤝 Contributing
 
-Las contribuciones son bienvenidas! Áreas de interés:
-- 🐛 Reportar bugs
-- 💡 Sugerir nuevas características
-- 📝 Mejorar documentación
-- 🌍 Añadir traducciones
-- 🔒 Auditoría de seguridad
+Contributions are welcome! Areas of interest:
+- 🐛 Bug reports
+- 💡 Feature suggestions
+- 📝 Documentation improvements
+- 🌍 New translations
+- 🔒 Security audits
 
 ---
 
 **Made with ❤️ by the Haztya Team**
 
-**Basado en Hypatia - Reimplementado y optimizado desde cero**
+**Based on Hypatia — reimplemented and optimized from scratch**
 
 
