@@ -102,7 +102,10 @@ public class ClamAVScanner implements MalwareScanner {
     public boolean isAvailable() {
         // Check if clamdscan or clamscan is available
         try {
-            ProcessBuilder pb = new ProcessBuilder("which", "clamdscan");
+            String os = System.getProperty("os.name").toLowerCase();
+            String whichCommand = os.contains("win") ? "where" : "which";
+            
+            ProcessBuilder pb = new ProcessBuilder(whichCommand, "clamdscan");
             Process process = pb.start();
             int exitCode = process.waitFor();
             if (exitCode == 0) {
@@ -110,7 +113,7 @@ public class ClamAVScanner implements MalwareScanner {
             }
             
             // Try clamscan as fallback
-            pb = new ProcessBuilder("which", "clamscan");
+            pb = new ProcessBuilder(whichCommand, "clamscan");
             process = pb.start();
             exitCode = process.waitFor();
             return exitCode == 0;

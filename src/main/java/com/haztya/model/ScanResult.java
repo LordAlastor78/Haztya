@@ -65,11 +65,11 @@ public class ScanResult {
     }
 
     public Date getScanDate() {
-        return scanDate;
+        return scanDate != null ? new Date(scanDate.getTime()) : null;
     }
 
     public void setScanDate(Date scanDate) {
-        this.scanDate = scanDate;
+        this.scanDate = scanDate != null ? new Date(scanDate.getTime()) : null;
     }
 
     public String getScanEngine() {
