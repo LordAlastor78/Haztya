@@ -1,0 +1,62 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="us.spotco.malwarescanner.MainActivity">
+
+    <item
+        android:id="@+id/btnStartScan"
+        android:title="@string/scan_control"
+        android:icon="@android:drawable/ic_media_play"
+        android:showAsAction="always" />
+    <item
+        android:id="@+id/toggleOnionRouting"
+        android:title="@string/lblOnionRoutingToggle"
+        android:checkable="true" />
+    <item
+        android:id="@+id/mnuUpdateDatabase"
+        android:title="@string/lblUpdateDatabase" />
+    <item
+        android:id="@+id/mnuDatabaseServer"
+        android:title="@string/lblDatabaseServer" />
+    <item
+        android:id="@+id/mnuSigningKey"
+        android:title="@string/lblSigningKey" />
+    <item
+        android:id="@+id/toggleExtended"
+        android:title="@string/lblExtendedDatabaseToggle"
+        android:checkable="true" />
+    <item
+        android:id="@+id/toggleLinkScanner"
+        android:title="@string/lblLinkScannerToggle"
+        android:checkable="true" />
+    <item
+        android:id="@+id/toggleRealtime"
+        android:title="@string/lblRealtimeScannerToggle"
+        android:checkable="true" />
+    <item
+        android:id="@+id/mnuScanSystem"
+        android:title="@string/lblScanSystem"
+        android:checkable="true"
+        android:checked="false" />
+    <item
+        android:id="@+id/mnuScanApps"
+        android:title="@string/lblScanApps"
+        android:checkable="true"
+        android:checked="true" />
+    <item
+        android:id="@+id/mnuScanInternal"
+        android:title="@string/lblScanInternal"
+        android:checkable="true"
+        android:checked="true" />
+    <item
+        android:id="@+id/mnuScanExternal"
+        android:title="@string/lblScanExternal"
+        android:checkable="true"
+        android:checked="false" />
+    <item
+        android:id="@+id/mnuSelfTestReal"
+        android:title="@string/lblSelfTest" />
+    <item
+        android:id="@+id/mnuFullCredits"
+        android:title="@string/lblFullCredits" />
+
+</menu>

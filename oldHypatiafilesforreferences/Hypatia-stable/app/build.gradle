@@ -1,0 +1,42 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 33
+    defaultConfig {
+        applicationId "us.spotco.malwarescanner"
+        minSdkVersion 16
+        targetSdkVersion 32
+        versionCode 314
+        versionName "3.14"
+        resConfigs 'en', 'af', 'cs', 'de', 'el', 'es', 'fi', 'fr', 'gl', 'it', 'pl', 'pt', 'pt-rBR', 'ru', 'tr', 'zh-rCN', 'ar', 'et', 'hr', 'in', 'ja', 'ro', 'sk', 'uk', 'zh-rTW'
+    }
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            minifyEnabled true
+            zipAlignEnabled true
+        }
+        release {
+            shrinkResources true
+            minifyEnabled true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lint {
+        abortOnError false
+    }
+    packagingOptions {
+        exclude 'org/bouncycastle/pqc/crypto/picnic/lowmcL1.bin.properties'
+        exclude 'org/bouncycastle/pqc/crypto/picnic/lowmcL3.bin.properties'
+        exclude 'org/bouncycastle/pqc/crypto/picnic/lowmcL5.bin.properties'
+        exclude 'org/bouncycastle/x509/CertPathReviewerMessages.properties'
+        exclude 'org/bouncycastle/x509/CertPathReviewerMessages_de.properties'
+    }
+}
+
+dependencies {
+    implementation 'commons-io:commons-io:2.5'
+    implementation 'org.bouncycastle:bcpg-jdk15to18:1.77'
+    implementation 'com.google.guava:guava:33.0.0-jre'
+}

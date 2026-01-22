@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_copyright">Copyright 2017-2024 Divested Computing Group</string>
+    <string name="app_license">Licence : GPL-3.0</string>
+    <string name="app_version">Numéro de version : %s</string>
+    <string name="app_db_type_clamav">Propulsé par les signatures de style ClamAV</string>
+    <string name="lblOnionRoutingToggle">Téléchargement par Tor</string>
+    <string name="lblOnionRoutingEnabledHint">Téléchargement par Tor, cela peut prendre un certain temps…</string>
+    <string name="lblOnionRoutingNotInstalled">Orbot n\'est pas installé !</string>
+    <string name="lblUpdateDatabase">Mise à jour des bases de données</string>
+    <string name="lblDatabaseServer">Remplacer le serveur de base de données</string>
+    <string name="lblFullCredits">Crédits</string>
+    <string name="lblScanSystem">Analyser le /système</string>
+    <string name="lblScanApps">Analyser les APK des applis</string>
+    <string name="lblScanInternal">Analyser la mémoire interne</string>
+    <string name="lblScanExternal">Analyser la mémoire externe</string>
+    <string name="lblNotificationMalwareDetectionTitle">Détection des logiciels malveillants</string>
+    <string name="lblNotificationMalwareDetectionDescription">Utilisé pour alerter lorsqu\'un logiciel malveillant est détecté</string>
+    <string name="lblNotificationRealtimeTitle">Analyser en temps réel</string>
+    <string name="lblNotificationRealtimeDescription">Utilisé pour montrer les fichiers scannés compteur et maintenir le service de fond</string>
+    <string name="lblNotificationRealtimeText">Les logiciels malveillants connus seront détectés en temps réel</string>
+    <string name="lblNotificationRealtimeStopped">Hypatia : Scanner en temps réel a été arrêté</string>
+    <string name="lblNotificationRealtimeDetection">Logiciel malveillant détecté :</string>
+    <string name="lblRealtimeScannerToggle">Scanner en temps réel</string>
+    <string name="lblReset">Réinitialiser</string>
+    <string name="lblOverride">Remplacer</string>
+    <string name="main_database_updating">Mise à jour des %s bases de données…</string>
+    <string name="main_database_override">Utilisation du serveur %s</string>
+    <string name="main_database_download_success">Téléchargement réussi</string>
+    <string name="main_database_download_error">Fichier non téléchargé, code de réponse %s</string>
+    <string name="main_no_database_available">Pas de base de données disponible, pas d\'analyse…</string>
+    <string name="main_database_released_on">Publiée le %s</string>
+    <string name="main_database_not_changed">Fichier non modifié</string>
+    <string name="main_database_not_modified_since">depuis le %s</string>
+    <string name="main_database_download_error_logcat">Téléchargement échoué, vérifier le logcat</string>
+    <string name="main_starting_scan">Démarrage de l\'analyse…</string>
+    <string name="main_cancelling_scan">L\'analyse est annulée…</string>
+    <string name="main_files_pending_scan">%s dossiers en attente de scan</string>
+    <string name="main_database_loaded">Base de données chargée de %s signatures</string>
+    <string name="main_hashing_files">Hachage de fichiers…</string>
+    <string name="main_hashing_done">Hachages calculés pour tous les fichiers</string>
+    <string name="main_hash_scan_done">Vérification de tous les hachages %s par rapport aux bases de données de signatures</string>
+    <string name="main_scanning_done">Analyse complétée en %s secondes @ %sMo/s !</string>
+    <string name="main_files_scanned_count">%s fichiers analysés</string>
+    <string name="scan_control">Contrôle de l\'analyse</string>
+    <string name="lblScanRunning">Action ignorée, une analyse est en cours !</string>
+    <string name="lblSigningKey">Signature utilisée pour signer la base de données</string>
+    <string name="lblNoNetwork">Aucun réseau connecté !</string>
+    <string name="self_test_result_success">Auto-test réussi.</string>
+    <string name="self_test_result_failure">Échec de l\'auto-test !</string>
+    <string name="lblDatabaseLoading">Action sautée, la base de données est en cours de chargement ! </string>
+    <string name="lblDatabasesUpdated">Toutes les bases de données ont été mises à jour !</string>
+    <string name="lookupVT">Chercher</string>
+    <string name="deleteFile">Effacer</string>
+    <string name="deleted">Effacé !</string>
+    <string name="ignoreDetection">Ignorer</string>
+    <string name="detections_none">Aucune correspondance trouvée :)</string>
+    <string name="detections_found">Correspondances trouvées ! :(</string>
+    <string name="confirm_lookup_title">Confirmer la recherche</string>
+    <string name="confirm_lookup_summary">Êtes-vous certain de vouloir ouvrir VirusTotal.com sur votre navigateur Internet avec le hachage suivant ?</string>
+    <string name="confirm_delete_title">Confirmer l\'effacement</string>
+    <string name="confirm_delete_summary">Êtes-vous sûr de vouloir effacer le fichier suivant ?</string>
+    <string name="delete_failed">Échec de l\'effacement !</string>
+    <string name="ignored">Ignoré !</string>
+    <string name="uninstallApp">Désinstaller</string>
+    <string name="lblSelfTest">Écrire les fichiers d\'auto-test</string>
+    <string name="lblExtendedDatabaseToggle">Base de données étendue</string>
+    <string name="confirm_extended_title">Activer la base de données étendue ?</string>
+    <string name="confirm_extended_summary">[EXPÉRIMENTAL]\nCela activera la détection de ~40 millions de signatures supplémentaires.\nCela nécessite un téléchargement de 125 Mo, ralentira le démarrage par plus de deux minutes, augmentera l\'utilisation de la RAM par l\'application et augmentera le taux de faux positifs.\nCette base de données n\'est mise à jour que trimestriellement.</string>
+    <string name="confirm_update_title">Confirmer le téléchargement</string>
+    <string name="confirm_update_summary">Vous semblez être sur une connexion facturée au volume ou à la durée. Êtes-vous sûr de vouloir mettre à jour les bases de données ?\nCela peut télécharger jusqu\'à %s mégaoctets de données.</string>
+    <string name="lblUpdateRunning">Action sautée, une mise à jour est en cours d\'exécution !</string>
+    <string name="lblWroteTestFiles">Fichiers d\'auto-test écrits !</string>
+    <string name="main_database_loading">Chargement de la base de données…</string>
+    <string name="lblNotificationLinkDetection">Lien malveillant détecté :</string>
+    <string name="accessibility_service_description">Extraire des domaines depuis la totalité du texte sur l\'écran et les comparer à un liste de blocage</string>
+    <string name="lblResetPrimary">Serveurs primaires</string>
+    <string name="accessibility_service_label">Analyseur de liens Hypatia</string>
+    <string name="lblLinkScannerToggle">Analyseur de liens</string>
+    <string name="confirm_link_scanner_title">Activer l\'analyseur de liens ?</string>
+    <string name="lblResetCloudflare">Miroir Cloudflare</string>
+    <string name="confirm_link_scanner_summary">[EXPÉRIMENTAL]
+\nCela téléchargera une base de données supplémentaire de domaines.
+\nTout lien trouvé dans le contenu de l\'écran sera comparé avec la base de données
+\nIl faut l\'autorisation This requires granting accessibility service permission manually.
+\nThis can have a substantial performance impact on screens with large amounts of text.</string>
+</resources>
